@@ -7,6 +7,10 @@ The tutorial consists of two task:
 * *Basic Forwarding with P4*: this tutorial will allow you to exercise your P4 language knowledge and understand some key characteristics of the language. 
 * *P4 network calculator*: This tutorial will get you to work with the control plane of the P4 language.
 
+> Before progressing to the details, you need first to install a couple of
+> additional Python package for the GRPC control channel. Simply type `make
+> install` on any of the tutorial folder. 
+
 ## Toolchain
 
 The tooling for this tutorial will be based on Docker images maintained by the P4 foundation. We will will basically utilize two main docker containers. The `p4c` container contains all the compiler binaries, required to compile P4 programs. In this tutorial we will be using the open-soruce P4C compiler, maintained by the P4 foundation. The `stratum_bmv2` conrtainer contains a modified version of the Mininet framework and add support for the P4 Behavioural Model v2 switch, a reference implementation of the P4 switch specifications. 

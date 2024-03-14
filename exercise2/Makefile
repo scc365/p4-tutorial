@@ -49,7 +49,9 @@ mn-log:
 	docker logs -f mininet
 
 install:
-	pip3  install grpcio grpcio-tools
+	sudo pip3.10 install grpcio grpcio-tools scapy
+	sudo apt install docker-compose -y
+	sudo pip3.9 install grpcio grpcio-tools scapy
 
 p4-build: p4src/main.p4
 	$(info *** Building P4 program...)

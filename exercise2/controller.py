@@ -110,15 +110,9 @@ def main(p4info_file_path, bmv2_file_path):
                 # You should consider how to computer the result 
                 # and how to transmit the packet as a packet_out. 
                 # Check the file utils/p4_cli/helper.py for support 
-                # functions. The  
-                packetout = p4info_helper.buildPacketOut(
-                    payload=a.build(),  # send the packet in you received back to output port 1!
-                    metadata={
-                        1: encodeNum(1, 16),
-                    },  # egress_port (check @controller_header("packet_out") in the p4 code)
-                )
-
-                res = s1.PacketOut(packetout)
+                # functions. The packet parsing is implemented using scappy. 
+                # You can edit directly any field in object a and then
+                # convert it into a byte array using the .build() method.
 
     except KeyboardInterrupt:
         print(" Shutting down.")

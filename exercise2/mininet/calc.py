@@ -43,7 +43,6 @@ def num_parser(s, i, ts):
     match = re.match(pattern,s[i:])
     if match:
         ts.append(Token('num', match.group(1)))
-        print(i + match.end())
         return i + match.end(), ts
     raise NumParseError('Expected number literal.')
 

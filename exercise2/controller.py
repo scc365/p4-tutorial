@@ -106,13 +106,39 @@ def main(p4info_file_path, bmv2_file_path):
             if packetin is not None:
                 print("PACKET IN received")
                 packet = packetin.packet.payload
+                # extract packet headers with scapy
                 a = Ether(packet)
-                # You should consider how to computer the result 
-                # and how to transmit the packet as a packet_out. 
-                # Check the file utils/p4_cli/helper.py for support 
-                # functions. The packet parsing is implemented using scappy. 
-                # You can edit directly any field in object a and then
-                # convert it into a byte array using the .build() method.
+                tmp = a.src
+                a.src = a.dst
+                a.dst = tmp
+                a.result = a.operand_a * a.operand_b
+                print(a.result)
+                # Construct the packet
+                packetout = p4info_helper.buildPacketOut(
+                    payload=a.build(),  # send the packet in you received back to output port 1!
+                    # The value of the metadata field comes from the p4info
+                    # file:
+                    # controller_packet_metadata {
+                    #   preamble {
+                    #     id: 67135753
+                    #     name: "packet_out"
+                    #     alias: "packet_out"
+                    #     annotations: "@controller_header(\"packet_out\")"
+                    #   }
+                    #   metadata {
+                    #     id: 1
+                    #     name: "egress_port"
+                    #     bitwidth: 16
+                    #   }
+                    # }
+                    # type_info {
+                    # }
+                    metadata={
+                        1: encodeNum(1, 16),
+                    },  # egress_port (check @controller_header("packet_out") in the p4 code)
+                )
+
+                res = s1.PacketOut(packetout)
 
     except KeyboardInterrupt:
         print(" Shutting down.")

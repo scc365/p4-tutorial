@@ -83,6 +83,12 @@ header p4calc_t {
  */
 }
 
+
+@controller_header("packet_out")
+header packet_out_t {
+    bit<16> egress_port;
+}
+
 /*
  * This is a special header for the packet out message.
  * You can set it in your controller using the metadata 
@@ -202,22 +208,33 @@ control MyIngress(inout headers hdr,
 
     action operation_add() {
         /* TODO call send_back with operand_a + operand_b */
+        send_back(hdr.p4calc.operand_a + hdr.p4calc.operand_b);
     }
 
     action operation_sub() {
         /* TODO call send_back with operand_a - operand_b */
+        send_back(hdr.p4calc.operand_a - hdr.p4calc.operand_b);
     }
 
     action operation_and() {
         /* TODO call send_back with operand_a & operand_b */
+        send_back(hdr.p4calc.operand_a & hdr.p4calc.operand_b);
     }
 
     action operation_or() {
         /* TODO call send_back with operand_a | operand_b */
+        send_back(hdr.p4calc.operand_a | hdr.p4calc.operand_b);
     }
 
     action operation_xor() {
         /* TODO call send_back with operand_a ^ operand_b */
+        send_back(hdr.p4calc.operand_a ^ hdr.p4calc.operand_b);
+    }
+
+    action operation_mult() {
+        /* TODO Send packet to the controller to process 
+         * operation on the controller */
+        standard_metadata.egress_spec = CPU_PORT;
     }
 
     action operation_mult() {
@@ -258,7 +275,16 @@ control MyIngress(inout headers hdr,
 
     apply {
         if (standard_metadata.ingress_port == CPU_PORT) {
+<<<<<<< HEAD
             standard_metadata.egress_spec = (bit<9>)1;
+=======
+            /* Swap the MAC addresses */
+            bit<48> tmp;
+            tmp = hdr.ethernet.dstAddr;
+            hdr.ethernet.dstAddr = hdr.ethernet.srcAddr;
+            hdr.ethernet.srcAddr = tmp;
+            standard_metadata.egress_spec = (bit<9>)hdr.packetout.egress_port;
+>>>>>>> 4718867 (Uploading the final solution)
         } else
             calculate.apply();
     }

@@ -27,7 +27,7 @@ deps: _docker_pull_all
 
 _start:
 	$(info *** Starting Mininet (${NGSDN_TOPO_PY})... )
-	@NGSDN_TOPO_PY=${NGSDN_TOPO_PY} docker-compose -f docker-compose.yml up -d
+	@NGSDN_TOPO_PY=${NGSDN_TOPO_PY} docker compose -f docker-compose.yml up -d
 	sleep 10
 	PYTHONPATH=${PYTHONPATH} python3 ../util/simple_controller.py -a localhost:50001 -d 1 -p /tmp/s1.txt -c mininet/s1-runtime.json
 	PYTHONPATH=${PYTHONPATH} python3 ../util/simple_controller.py -a localhost:50002 -d 1 -p /tmp/s1.txt -c mininet/s2-runtime.json
@@ -37,24 +37,21 @@ _start:
 start: NGSDN_TOPO_PY := topo.py
 start: _start
 
-stop:
-	$(info *** Stopping ONOS and Mininet...)
-	@NGSDN_TOPO_PY=foo docker-compose -f docker-compose.yml down -t0
+stop: NGSDN_TOPO_PY := topo.py
+stop: _stop
+_stop:
+	$(info *** Stopping Mininet...)
+	@NGSDN_TOPO_PY=${NGSDN_TOPO_PY} docker compose -f docker-compose.yml down -t0
 
 restart: reset start
 
 mn-cli:
 	$(info *** Attaching to Mininet CLI...)
 	$(info *** To detach press Ctrl-D (Mininet will keep running))
-	-@docker attach --detach-keys "ctrl-d" $(shell docker-compose ps -q mininet) || echo "*** Detached from Mininet CLI"
+	-@docker attach --detach-keys "ctrl-d" $(shell docker compose ps -q mininet) || echo "*** Detached from Mininet CLI"
 
 mn-log:
 	docker logs -f mininet
-
-install:
-	sudo pip3.10 install grpcio grpcio-tools scapy
-	sudo apt install docker-compose -y
-	sudo pip3.9 install grpcio grpcio-tools scapy
 
 p4-build: p4src/main.p4
 	$(info *** Building P4 program...)

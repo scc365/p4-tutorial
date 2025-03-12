@@ -1,10 +1,10 @@
 {
   "name": "scc_365/ken",
-  "image": "scc-registry.lancs.ac.uk/teaching/scc_365/ken:24",
+  "image": "scc-registry.lancs.ac.uk/teaching/scc_365/ken:24.0.8",
   "workspaceMount": "source=${localWorkspaceFolder}/,target=/workspace,type=bind,consistency=cached",
   "workspaceFolder": "/workspace",
   "postCreateCommand": "sh -c /scripts/entrypoint.sh",
-  // "privileged": true,
+  "privileged": true,
   // "containerEnv": {
   //   "DISPLAY": "${localEnv:DISPLAY}",
   // },

@@ -103,7 +103,7 @@ field, and return the packet to the sender.
 Follow the instructions from Step 1.  This time, you should see the
 correct result:
 
-```
+```bash
 mininet> h1 python /mininet/calc.py 10+10
 [<__main__.Token instance at 0x7ffffca68710>, <__main__.Token instance at 0x7ffffca687a0>, <__main__.Token instance at 0x7ffffca688c0>]
 ###[ Ethernet ]### 
@@ -132,7 +132,7 @@ To implement this functionality, you need to use a controller. We provide a P4
 controller skeleton implemented in Python in the folder (`controller.py`). You
 can run the controller with the following command.
 
-```
+```bash
 python3 controller.py --p4info p4src/build/p4info.txt --bmv2-json p4src/build/bmv2.json
 ```
 

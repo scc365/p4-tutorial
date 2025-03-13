@@ -1,6 +1,6 @@
 {
   "name": "scc_365/ken",
-  "image": "scc-registry.lancs.ac.uk/teaching/scc_365/ken:24.0.8",
+  "image": "scc-registry.lancs.ac.uk/teaching/scc_365/ken:24.2",
   "workspaceMount": "source=${localWorkspaceFolder}/,target=/workspace,type=bind,consistency=cached",
   "workspaceFolder": "/workspace",
   "postCreateCommand": "sh -c /scripts/entrypoint.sh",

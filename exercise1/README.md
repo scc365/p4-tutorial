@@ -1,8 +1,23 @@
-# Implementing Basic Forwarding
+#  Basic Forwarding
+
+## Table of Contents
+
+- [Basic Forwarding](#basic-forwarding)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Prerequisites](#prerequisites)
+  - [Step 1: Run the (incomplete) starter code](#step-1-run-the-incomplete-starter-code)
+    - [A note about the control plane](#a-note-about-the-control-plane)
+  - [Step 2: Implement L3 forwarding](#step-2-implement-l3-forwarding)
+  - [Step 3: Run your solution](#step-3-run-your-solution)
+  - [What's Next?](#whats-next)
+    - [Troubleshooting](#troubleshooting)
+      - [Cleaning up Mininet](#cleaning-up-mininet)
+  - [Relevant Documentation](#relevant-documentation)
 
 ## Introduction
 
-The objective of this exercise is to write a P4 program that implements basic
+The objective of this exercise is to copmlete the imlpementation of a P4 program that implements basic
 forwarding. To keep things simple, we will just implement forwarding for IPv4.
 
 With IPv4 forwarding, the switch must perform the following actions for every
@@ -47,7 +62,7 @@ Mininet to test its behavior.
    make start
    ```
 
-   This will:
+This will:
 
    - compile `main.p4`, and
    - start the pod-topo in Mininet and configure all switches with the
@@ -78,7 +93,8 @@ Mininet to test its behavior.
 
 The ping failed because each switch is programmed according to `main.p4`, which
 drops all packets on arrival. Your job is to extend this file, so it forwards
-packets.
+packets.i Everytime you want to test your solution, you need to recompile the P4 
+code, running `make p4-build`, and restart the Mininet instance, running `make restart`.
 
 ### A note about the control plane
 
@@ -133,15 +149,7 @@ A complete `main.p4` will contain the following components:
 Follow the instructions from Step 1. This time, you should be able to
 successfully ping between any two hosts in the topology.
 
-### Food for thought
-
-The "test suite" for your solution---sending pings between hosts in the
-topology---is not very robust. What else should you test to be confident that
-you implementation is correct?
-
-> Although the Python `scapy` library is outside the scope of this tutorial, it
-> can be used to generate packets for testing. The `send.py` file shows how to
-> use it.
+## What's Next?
 
 Other questions to consider:
 
